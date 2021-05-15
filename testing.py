@@ -10,6 +10,45 @@ def lorenz(x, y, z, s, r, b):
     z_dot = x*y - b*z
     return x_dot, y_dot, z_dot
 
+def plotCompare(array, it1, it2, x_label, y_label, title):
+    plt.plot(array[it1], label = "$x_0$ = " + str(round(xs_array[it1][0],2)))
+    plt.plot(array[it2], label = "$x_0$ = " + str(round(xs_array[it2][0],2)))
+
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+
+    plt.legend(loc = "lower center")
+
+    plt.xlim(0,5000)
+    plt.ylim(-5,55)
+    plt.grid()
+    plt.title(title)
+    
+def plotLorenz(xs_,ys_,zs_):
+    ax = plt.figure().add_subplot(projection='3d')
+
+    ax.plot(xs, ys, zs, lw=0.5)
+    ax.set_xlabel("X Axis")
+    ax.set_ylabel("Y Axis")
+    ax.set_zlabel("Z Axis")
+    ax.set_title("Lorenz Attractor")
+
+    plt.show()
+
+def plotPlots(arrayx):
+    j = 0
+    for i in xs_array:
+        j = j+1
+        plt.clf()
+        plt.plot(i)
+        plt.xlabel("Time step [arb]")
+        plt.ylabel("x position [arb]")
+        plt.xlim(0,5000)
+        plt.ylim(-30,30)
+        plt.grid()
+        plt.title("$x_0 =$" + str(round(i[0],6)))
+        plt.savefig("x0_" + str(j) + "_" + str(round(i[0],4)) +".png")
+
 
 dt = 0.01
 stepCnt = 5000
@@ -18,7 +57,7 @@ stepCnt = 5000
 xs_array = []
 ys_array = []
 zs_array = []
-xs_iv = np.linspace(1.0,1.1,100)
+xs_iv = np.linspace(1.0,2.0,100)
 xs = np.empty((stepCnt + 1,))
 ys = np.empty((stepCnt + 1,))
 zs = np.empty((stepCnt + 1,))
@@ -47,37 +86,6 @@ for x0 in xs_iv:
     ys_array.append(ys)
     zs_array.append(zs)
 
-xs_delta = []
-j = 0
-for i in xs_array:
-    j = j+1
-    plt.clf()
-    plt.plot(i)
-    plt.xlabel("Time step [arb]")
-    plt.ylabel("x position [arb]")
-    plt.xlim(0,5000)
-    plt.ylim(-30,30)
-    plt.grid()
-    plt.title("$x_0 =$" + str(round(i[0],6)))
-    plt.savefig("x0_" + str(j) + "_" + str(round(i[0],4)) +".png")
 
-'''ax = plt.figure().add_subplot(projection='3d')
-
-ax.plot(xs, ys, zs, lw=0.5)
-ax.set_xlabel("X Axis")
-ax.set_ylabel("Y Axis")
-ax.set_zlabel("Z Axis")
-ax.set_title("Lorenz Attractor")
-
-plt.show()'''
-
-'''plt.plot(xs_array[1]-xs_array[0])
-
-plt.xlabel("Time-step [arb]")
-plt.ylabel("Position in x [arb]")
-
-plt.xlim(0,5000)
-plt.ylim(-30,30)
-plt.grid()
-plt.title("$\Delta x$")'''
+    
 
