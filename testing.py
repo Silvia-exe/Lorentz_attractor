@@ -18,7 +18,7 @@ stepCnt = 5000
 xs_array = []
 ys_array = []
 zs_array = []
-xs_iv = np.linspace(1.0,1.1,10)
+xs_iv = np.linspace(1.0,1.1,100)
 xs = np.empty((stepCnt + 1,))
 ys = np.empty((stepCnt + 1,))
 zs = np.empty((stepCnt + 1,))
@@ -34,31 +34,50 @@ for x0 in xs_iv:
     xs[0] = x0
     ys[0] = ys[0]
     zs[0] = zs[0]
-    for  i in range(stepCnt):
+    for i in range(stepCnt):
     # Derivatives of the X, Y, Z state
         x_dot, y_dot, z_dot = lorenz(xs[i], ys[i], zs[i],ss,rs,bs)
         xs[i + 1] = xs[i] + (x_dot * dt)
         ys[i + 1] = ys[i] + (y_dot * dt)
         zs[i + 1] = zs[i] + (z_dot * dt)
     xs = np.array(xs)
+    ys = np.array(ys)
+    zs = np.array(zs)
     xs_array.append(xs)
-    ys_array.append([ys])
-    zs_array.append([zs])
-
-print(len(xs_array))
-print(xs_array)
+    ys_array.append(ys)
+    zs_array.append(zs)
 
 xs_delta = []
+j = 0
+for i in xs_array:
+    j = j+1
+    plt.clf()
+    plt.plot(i)
+    plt.xlabel("Time step [arb]")
+    plt.ylabel("x position [arb]")
+    plt.xlim(0,5000)
+    plt.ylim(-30,30)
+    plt.grid()
+    plt.title("$x_0 =$" + str(round(i[0],6)))
+    plt.savefig("x0_" + str(j) + "_" + str(round(i[0],4)) +".png")
 
-for i in range(len(xs_array)-1):
-    xs_delta = xs_array[i] - xs_array[i+1]
-    plt.plot(xs_delta)
-    plt.show()
+'''ax = plt.figure().add_subplot(projection='3d')
 
-plt.savefig("s" + str(int(ss)) + "_r" + str(int(rs)) + "_b"+ str(int(bs)) +"_" + str(xs[0])+str(ys[0])+str(zs[0])+".png")
+ax.plot(xs, ys, zs, lw=0.5)
+ax.set_xlabel("X Axis")
+ax.set_ylabel("Y Axis")
+ax.set_zlabel("Z Axis")
+ax.set_title("Lorenz Attractor")
 
-print(xs[-1])
-print(ys[-1])
-print(zs[-1])
+plt.show()'''
 
-plt.show()
+'''plt.plot(xs_array[1]-xs_array[0])
+
+plt.xlabel("Time-step [arb]")
+plt.ylabel("Position in x [arb]")
+
+plt.xlim(0,5000)
+plt.ylim(-30,30)
+plt.grid()
+plt.title("$\Delta x$")'''
+
